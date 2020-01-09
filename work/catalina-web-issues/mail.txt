@@ -1,0 +1,29 @@
+
+1) turn on verbose logging for some Avast components by running following (long) commands in Terminal app:
+
+sudo /Applications/Avast.app/Contents/Backend/utils/com.avast.cfgctl  -c com.avast.proxy.conf -t general -v verbose -b true;sudo killall com.avast.proxy
+sudo /Applications/Avast.app/Contents/Backend/utils/com.avast.cfgctl  -c com.avast.fileshield.conf -t general -v verbose -b true;sudo killall com.avast.fileshield
+
+2) save scripts gather.sh and submit.py from this mail’s attachments to Downloads directory. 
+The script gather.sh gathers specialized data about Avast processes, browsers, which process has what files opened, generates Avast support package, etc. into directory avast_gather in Documents folder.
+The script submit.py may generate Avast support package if it is not done successfully by gather.sh, packs avast_gather directory and sends it to Avast’s “black hole” ftp server - the data sent there can only be retrieved by Avast employees.
+
+3) induce the issue
+4) gather data about the current state of the system by running following command in terminal:
+
+bash ~/Downloads/gather.sh
+
+The script will require you to input your password. The command should print some stuff to the terminal most of the time; if it does not print anything for 10+ minutes, it may be stuck (hopefully very long chance)
+6) please gather full system logs while attempting to connect to a web site. In Terminal (run a new one if the gather script got stuck), run the following command to start saving system logging to file:
+
+sudo log stream --level debug >~/Documents/avast_gather/browser_manual_connect_test.log
+
+After that, please create a new tab in your browser and try to open some page (eg. youtube.com). When it fails, go to the Terminal app and press ctrl + c to stop the logging command
+
+7) reboot your computer to hopefully get Mac to working state and turn off verbose logging again via:
+sudo /Applications/Avast.app/Contents/Backend/utils/com.avast.cfgctl  -c com.avast.proxy.conf -t general -v verbose -b false; sudo killall com.avast.proxy
+sudo /Applications/Avast.app/Contents/Backend/utils/com.avast.cfgctl  -c com.avast.fileshield.conf -t general -v verbose -b false; sudo killall com.avast.fileshield
+8) Send the gathered data to Avast. You can check the avast_gather directory in Documents first to verify the data that is being sent. Send it by starting Terminal app and in it run the following command:
+python2 submit.py
+
+
