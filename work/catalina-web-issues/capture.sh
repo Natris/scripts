@@ -62,7 +62,7 @@ date
 echo "ensuring password is entered for other sudo commands; please enter your password"
 sudo pwd
 
-echo "storing fileshield logs"
+echo "copying fileshield logs"
 cp /Library/Logs/Avast/fileshield.* "$GATHER"
 
 echo "save list of currently running processes"
